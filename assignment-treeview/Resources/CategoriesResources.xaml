@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:assignment_treeview.ViewModels">
+
+	<!--<HierarchicalDataTemplate DataType="vm:CategoryViewModel" x:Key="CategoryTemplate"></HierarchicalDataTemplate>-->
+
+	<DataTemplate DataType="vm:ItemViewModel" x:Key="ItemTemplate"></DataTemplate>
+</ResourceDictionary>

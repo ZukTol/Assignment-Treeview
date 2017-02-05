@@ -3,11 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:assignment_treeview"
         xmlns:vm="clr-namespace:assignment_treeview.ViewModels"
         mc:Ignorable="d"
 		d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
         Title="MainWindow" Height="400" Width="300">
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Resources/CategoriesResources.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+
+			<HierarchicalDataTemplate DataType="vm:CategoryViewModel" x:Key="CategoryTemplate">
+				<TextBox Text="{Binding Name}"/>
+			</HierarchicalDataTemplate>
+		</ResourceDictionary>
+	</Window.Resources>
+	
     <Grid Margin="5">
         <Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -18,11 +29,23 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
+
+		<TreeView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 10" ItemsSource="{Binding CategoriesCollection}">
+			<TreeView.ItemTemplate>
+				<HierarchicalDataTemplate DataType="vm:CategoryViewModel">
+					<TextBox Text="{Binding Name}"/>
+					
+					<HierarchicalDataTemplate.ItemTemplate>
+						<DataTemplate DataType="vm:ItemViewModel">
+							<TextBox Text="{Binding Name}"/>
+						</DataTemplate>
+					</HierarchicalDataTemplate.ItemTemplate>
+				</HierarchicalDataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
 		
-		<TreeView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 10"/>
-		
-		<Button Grid.Row="1" Grid.Column="0" Content="Load"/>
+		<Button Grid.Row="1" Grid.Column="0" Content="Load" Command="{Binding LoadCmd}"/>
 		<TextBox Grid.Row="1" Grid.Column="1"/>
-		<Button Grid.Row="1" Grid.Column="2" Content="Exit" IsCancel="True"/>
+		<Button Grid.Row="1" Grid.Column="2" Content="Exit" IsCancel="True" Command="{Binding ExitCmd}"/>
     </Grid>
 </Window>
