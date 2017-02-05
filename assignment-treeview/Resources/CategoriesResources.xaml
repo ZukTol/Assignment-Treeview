@@ -5,4 +5,15 @@
 	<!--<HierarchicalDataTemplate DataType="vm:CategoryViewModel" x:Key="CategoryTemplate"></HierarchicalDataTemplate>-->
 
 	<DataTemplate DataType="vm:ItemViewModel" x:Key="ItemTemplate"></DataTemplate>
+	
+	<Style TargetType="TreeViewItem" x:Key="TreeItemStyle">
+		<Setter Property="IsExpanded" Value="True"/>
+	</Style>
+	
+	<Style TargetType="TreeView" x:Key="TreeStyle">
+		<Setter Property="Background" Value="AliceBlue"/>
+		<Setter Property="ItemContainerStyle" Value="{StaticResource TreeItemStyle}"/>
+	</Style>
+	
+	
 </ResourceDictionary>

@@ -19,6 +19,7 @@
 		public ICommand ExitCmd => new DelegateCommand(() => Application.Current.Shutdown());
 
 		private ICollectionView _categoriesCollection;
+		private string _filterString;
 
 		public MainWindowViewModel()
 		{
@@ -29,6 +30,16 @@
 		{
 			get { return _categoriesCollection; }
 			set { SetValue(ref _categoriesCollection, value); }
+		}
+
+		public string FilterString
+		{
+			get { return _filterString; }
+			set
+			{
+				if(SetValue(ref _filterString, value))
+					DoFilterTree(value);
+			}
 		}
 
 		void SetupCategoriesCollection()
@@ -65,6 +76,11 @@
 					category.Items.Add(newItem);
 				}
 			}
+		}
+
+		void DoFilterTree(string filter)
+		{
+			
 		}
 
 		private int NewCategoriesCount()
