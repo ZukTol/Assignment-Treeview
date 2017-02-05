@@ -4,9 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:assignment_treeview"
+        xmlns:vm="clr-namespace:assignment_treeview.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+		d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
+        Title="MainWindow" Height="400" Width="300">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		
+		<TreeView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 10"/>
+		
+		<Button Grid.Row="1" Grid.Column="0" Content="Load"/>
+		<TextBox Grid.Row="1" Grid.Column="1"/>
+		<Button Grid.Row="1" Grid.Column="2" Content="Exit" IsCancel="True"/>
     </Grid>
 </Window>
