@@ -29,5 +29,7 @@
 			get { return _name; }
 			set { SetValue(ref _name, value); }
 		}
+
+		public int Id { get; set; }
 	}
 }

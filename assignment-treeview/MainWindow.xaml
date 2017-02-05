@@ -32,7 +32,7 @@
 
 		<TreeView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 10" ItemsSource="{Binding CategoriesCollection}">
 			<TreeView.ItemTemplate>
-				<HierarchicalDataTemplate DataType="vm:CategoryViewModel">
+				<HierarchicalDataTemplate DataType="vm:CategoryViewModel" ItemsSource="{Binding Items}">
 					<TextBox Text="{Binding Name}"/>
 					
 					<HierarchicalDataTemplate.ItemTemplate>

@@ -43,7 +43,7 @@
 		{
 			var newCatCount = NewCategoriesCount();
 
-			if(Categories.Count + newCatCount > MaxCategoriesCount)
+			if (Categories.Count + newCatCount > MaxCategoriesCount)
 				newCatCount = MaxCategoriesCount - Categories.Count;
 
 			for (var i = 0; i < newCatCount; i++)
@@ -53,25 +53,58 @@
 
 				Categories.Add(newCategory);
 			}
+
+			foreach (var category in Categories)
+			{
+				category.Items.Clear();
+				var newItemsCount = NewItemsCount();
+				for (var i = 0; i < newItemsCount; i++)
+				{
+					var id = NewValidItemId(category.Items);
+					var newItem = new ItemViewModel { Name = "Item" + id.ToString(), Id = id };
+					category.Items.Add(newItem);
+				}
+			}
 		}
 
-		int NewCategoriesCount()
+		private int NewCategoriesCount()
 		{
 			return _catRandom.Next(25, 51);
 		}
 
-		int NewCategoryId()
+		private int NewCategoryId()
 		{
 			return _catRandom.Next(1, 1000);
 		}
 
-		int NewValidCategoryName()
+		private int NewValidCategoryName()
 		{
 			var ids = Categories.Select(c => c.Id).ToList();
 			var newId = NewCategoryId();
-			while(ids.Contains(newId))
+			while (ids.Contains(newId))
 			{
 				newId = NewCategoryId();
+			}
+			return newId;
+		}
+
+		private int NewItemsCount()
+		{
+			return _catRandom.Next(3, 11);
+		}
+
+		private int NewItemId()
+		{
+			return _catRandom.Next(1, 31);
+		}
+
+		private int NewValidItemId(ObservableCollection<ItemViewModel> items)
+		{
+			var ids = items.Select(c => c.Id).ToList();
+			var newId = NewItemId();
+			while (ids.Contains(newId))
+			{
+				newId = NewItemId();
 			}
 			return newId;
 		}
