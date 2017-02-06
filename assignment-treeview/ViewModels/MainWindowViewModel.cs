@@ -1,6 +1,8 @@
 ﻿namespace assignment_treeview.ViewModels
 {
 	using System;
+	using System.Collections;
+	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.ComponentModel;
 	using System.Linq;
@@ -23,7 +25,7 @@
 
 		public MainWindowViewModel()
 		{
-			SetupCategoriesCollection();
+			SetupCategoriesCollection(Categories);
 		}
 
 		public ICollectionView CategoriesCollection
@@ -42,9 +44,9 @@
 			}
 		}
 
-		void SetupCategoriesCollection()
+		void SetupCategoriesCollection(IList categories)
 		{
-			var collection = new ListCollectionView(Categories);
+			var collection = new ListCollectionView(categories);
 			collection.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Ascending));
 
 			CategoriesCollection = collection;
@@ -76,11 +78,30 @@
 					category.Items.Add(newItem);
 				}
 			}
+
+			DoFilterTree(FilterString);
 		}
 
 		void DoFilterTree(string filter)
 		{
-			
+			if(string.IsNullOrWhiteSpace(filter))
+			{ SetupCategoriesCollection(Categories); }
+			else
+			{
+				var matchingCats = Categories.Where(c => c.Name.IndexOf(filter, StringComparison.InvariantCultureIgnoreCase) != -1).ToList();
+				foreach(var categoryViewModel in matchingCats)
+				{
+					categoryViewModel.MatchFilter = 1;
+				}
+
+				List<CategoryViewModel> cc;
+
+				foreach(var category in Categories)
+				{
+					
+				}
+				SetupCategoriesCollection(matchingCats);
+			}
 		}
 
 		private int NewCategoriesCount()
