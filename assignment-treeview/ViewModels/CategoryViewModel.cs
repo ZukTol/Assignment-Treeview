@@ -1,6 +1,7 @@
 ﻿namespace assignment_treeview.ViewModels
 {
 	using System.Collections.ObjectModel;
+	using System.Linq;
 
 
 	public class CategoryViewModel : ViewModelBase
@@ -23,7 +24,17 @@
 
 		public int Id { get; set; }
 
-		public ObservableCollection<ItemViewModel> Items { get { return _items; } }
+		public ObservableCollection<ItemViewModel> Items { get { return _items; } set { SetValue(ref _items, value); } }
+
+		public CategoryViewModel Clone()
+		{
+			var res = new CategoryViewModel { Name = Name, Id = Id };
+			foreach (var result in Items.Select(i => i.Clone()))
+			{
+				res.Items.Add(result);
+			}
+			return res;
+		}
 
 		#region Object overrides
 		protected bool Equals(CategoryViewModel other)
@@ -33,10 +44,10 @@
 
 		public override bool Equals(object obj)
 		{
-			if(ReferenceEquals(null, obj)) return false;
-			if(ReferenceEquals(this, obj)) return true;
-			if(obj.GetType() != this.GetType()) return false;
-			return Equals((CategoryViewModel) obj);
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((CategoryViewModel)obj);
 		}
 
 		public override int GetHashCode()
@@ -64,6 +75,11 @@
 		{
 			get { return _matchFilter; }
 			set { SetValue(ref _matchFilter, value); }
+		}
+
+		public ItemViewModel Clone()
+		{
+			return new ItemViewModel {Name = Name, Id = Id};
 		}
 
 		#region Object overrides

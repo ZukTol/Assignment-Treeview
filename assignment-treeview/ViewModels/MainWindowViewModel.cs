@@ -88,17 +88,28 @@
 			{ SetupCategoriesCollection(Categories); }
 			else
 			{
-				var matchingCats = Categories.Where(c => c.Name.IndexOf(filter, StringComparison.InvariantCultureIgnoreCase) != -1).ToList();
+				var categories = Categories.Select(c => c.Clone()).ToList();
+				var matchingCats = categories.Where(c => c.Name.IndexOf(filter, StringComparison.InvariantCultureIgnoreCase) != -1).ToList();
 				foreach(var categoryViewModel in matchingCats)
 				{
 					categoryViewModel.MatchFilter = 1;
 				}
 
-				List<CategoryViewModel> cc;
-
-				foreach(var category in Categories)
+				foreach(var category in categories)
 				{
-					
+					var matchingItems = category.Items.Where(c => c.Name.IndexOf(filter, StringComparison.InvariantCultureIgnoreCase) != -1).ToList();
+					if(matchingItems.Any())
+					{
+						foreach(var item in matchingItems)
+						{
+							item.MatchFilter = 1;
+						}
+						var cat = matchingCats.FirstOrDefault(c => c.Equals(category));
+						if (cat == null)
+							matchingCats.Add(category);
+						else
+							cat.Items = category.Items;
+					}
 				}
 				SetupCategoriesCollection(matchingCats);
 			}

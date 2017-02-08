@@ -33,17 +33,23 @@
 		<TreeView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 10" ItemsSource="{Binding CategoriesCollection}" Style="{StaticResource TreeStyle}">
 			<TreeView.ItemTemplate>
 				<HierarchicalDataTemplate DataType="vm:CategoryViewModel" ItemsSource="{Binding Items}">
-					<TextBlock Name="Text"  Text="{Binding Name}"/>
+					<TextBlock Name="CatName"  Text="{Binding Name}"/>
 					
 					<HierarchicalDataTemplate.Triggers>
 						<DataTrigger Binding="{Binding MatchFilter}" Value="1">
-							<Setter TargetName="Text" Property="Foreground" Value="Green"/>
+							<Setter TargetName="CatName" Property="Foreground" Value="Green"/>
 						</DataTrigger>
 					</HierarchicalDataTemplate.Triggers>
 					
 					<HierarchicalDataTemplate.ItemTemplate>
 						<DataTemplate DataType="vm:ItemViewModel">
-							<TextBlock Text="{Binding Name}"/>
+							<TextBlock Name="ItemName"  Text="{Binding Name}"/>
+
+							<DataTemplate.Triggers>
+								<DataTrigger Binding="{Binding MatchFilter}" Value="1">
+									<Setter TargetName="ItemName" Property="Foreground" Value="Green"/>
+								</DataTrigger>
+							</DataTemplate.Triggers>
 						</DataTemplate>
 					</HierarchicalDataTemplate.ItemTemplate>
 				</HierarchicalDataTemplate>
